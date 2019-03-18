@@ -53,10 +53,13 @@ class DFRobot_DC_Motor:
   sta_err_soft_verion = 0x03
   sta_err_parameter = 0x04
 
+  ''' last operate status '''
+  last_operate_status = sta_ok
+
   ''' Orientation '''
-  cw = 0x01   # clockwise
-  ccw = 0x02  # countclockwise
-  all = 0xff  # all
+  cw = 0x01
+  ccw = 0x02
+  all = 0xff
 
   def begin(self):
     '''
@@ -76,52 +79,52 @@ class DFRobot_DC_Motor:
     '''
       @brief    Set dc motor encoder enable
 
-      @param id   Encoder id, in range 1 to 2
+      @param id: int    Encoder id, in range 1 to 2
     '''
   
   def set_encoder_disable(self, id):
     '''
       @brief    Set dc motor encoder disable
 
-      @param id   Encoder id, in range 1 to 2
+      @param id: int   Encoder id, in range 1 to 2
     '''
 
   def set_encoder_reduction_ratio(self, id, reduction_ratio):
     '''
       @brief    Set dc motor encoder reduction ratio
 
-      @param id                 Encoder id, in range 1 to 2
-      @param reduction_ratio    Set dc motor encoder reduction ratio, range in 1 to 2000, (pulse per circle) = 16 * reduction_ratio * 2
+      @param id: int                 Encoder id, in range 1 to 2
+      @param reduction_ratio: int    Set dc motor encoder reduction ratio, range in 1 to 2000, (pulse per circle) = 16 * reduction_ratio * 2
     '''
 
   def get_encoder_speed(self, id):
     '''
       @brief    Get dc motor encoder speed, unit rpm
 
-      @param id   Encoder id, in range 1 to 2
+      @param id: int   Encoder id, in range 1 to 2
     '''
 
   def set_moter_pwm_frequency(self, frequency):
     '''
       @brief    Set dc motor pwm frequency
 
-      @param frequency    Frequency to set, in range 50HZ to 12750HZ, (actual frequency) = frequency - (frequency % 50)
+      @param frequency: int    Frequency to set, in range 50HZ to 12750HZ, (actual frequency) = frequency - (frequency % 50)
     '''
 
   def motor_movement(self, id, orientation, speed):
     '''
       @brief    Motor movement
 
-      @param id             Motor id to move
-      @param orientation    Motor orientation, this.cw (clockwise) or this.ccw (counterclockwise)
-      @param speed          Motor pwm duty cycle, in range 1.1 to 99.9
+      @param id: int             Motor id to move
+      @param orientation: int    Motor orientation, this.cw (clockwise) or this.ccw (counterclockwise)
+      @param speed: float        Motor pwm duty cycle, in range 1.1 to 99.9
     '''
 
   def motor_stop(self, id):
     '''
       @brief    Motor stop
 
-      @param id   Motor id to stop, use this.all to stop all motors
+      @param int    Motor id to stop, use this.all to stop all motors
     '''
 
   def detecte(self):
@@ -135,8 +138,8 @@ class DFRobot_DC_Motor_IIC(DFRobot_DC_Motor):
 
   def __init__(self, bus_id, addr):
     '''
-      @param bus_id   Which bus to operate
-      @oaram addr     Board controler address
+      @param bus_id: int   Which bus to operate
+      @oaram addr: int     Board controler address
     '''
 
 ```

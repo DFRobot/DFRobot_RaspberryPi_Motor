@@ -111,7 +111,7 @@ class DFRobot_DC_Motor:
     '''
       @brief    Set dc motor encoder enable
 
-      @param id   Encoder id, in range 1 to 2
+      @param id: int    Encoder id, in range 1 to 2
     '''
     id = int(id)
     if id < 0 or id > self._motor_count:
@@ -123,7 +123,7 @@ class DFRobot_DC_Motor:
     '''
       @brief    Set dc motor encoder disable
 
-      @param id   Encoder id, in range 1 to 2
+      @param id: int   Encoder id, in range 1 to 2
     '''
     id = int(id)
     if id < 0 or id > self._motor_count:
@@ -135,8 +135,8 @@ class DFRobot_DC_Motor:
     '''
       @brief    Set dc motor encoder reduction ratio
 
-      @param id                 Encoder id, in range 1 to 2
-      @param reduction_ratio    Set dc motor encoder reduction ratio, range in 1 to 2000, (pulse per circle) = 16 * reduction_ratio * 2
+      @param id: int                 Encoder id, in range 1 to 2
+      @param reduction_ratio: int    Set dc motor encoder reduction ratio, range in 1 to 2000, (pulse per circle) = 16 * reduction_ratio * 2
     '''
     id = int(id)
     if id < 0 or id > self._motor_count:
@@ -152,7 +152,7 @@ class DFRobot_DC_Motor:
     '''
       @brief    Get dc motor encoder speed, unit rpm
 
-      @param id   Encoder id, in range 1 to 2
+      @param id: int   Encoder id, in range 1 to 2
     '''
     if id < 0 or id > self._motor_count:
       self.last_operate_status = self.sta_err_parameter
@@ -167,7 +167,7 @@ class DFRobot_DC_Motor:
     '''
       @brief    Set dc motor pwm frequency
 
-      @param frequency    Frequency to set, in range 50HZ to 12750HZ, (actual frequency) = frequency - (frequency % 50)
+      @param frequency: int    Frequency to set, in range 50HZ to 12750HZ, (actual frequency) = frequency - (frequency % 50)
     '''
     if frequency < 50 or frequency > 12750:
       self.last_operate_status = self.sta_err_parameter
@@ -179,9 +179,9 @@ class DFRobot_DC_Motor:
     '''
       @brief    Motor movement
 
-      @param id             Motor id to move
-      @param orientation    Motor orientation, this.cw (clockwise) or this.ccw (counterclockwise)
-      @param speed          Motor pwm duty cycle, in range 1.1 to 99.9
+      @param id: int             Motor id to move
+      @param orientation: int    Motor orientation, this.cw (clockwise) or this.ccw (counterclockwise)
+      @param speed: float        Motor pwm duty cycle, in range 1.1 to 99.9
     '''
     if id < 1 or id > self._motor_count:
       self.last_operate_status = self.sta_err_parameter
@@ -201,7 +201,7 @@ class DFRobot_DC_Motor:
     '''
       @brief    Motor stop
 
-      @param id   Motor id to stop, use this.all to stop all motors
+      @param int    Motor id to stop, use this.all to stop all motors
     '''
     if id < 1 or id > self._motor_count:
       if id != self.all:
@@ -236,8 +236,8 @@ class DFRobot_DC_Motor_IIC(DFRobot_DC_Motor):
 
   def __init__(self, bus_id, addr):
     '''
-      @param bus_id   Which bus to operate
-      @oaram addr     Board controler address
+      @param bus_id: int   Which bus to operate
+      @oaram addr: int     Board controler address
     '''
     self._bus = smbus.SMBus(bus_id)
     DFRobot_DC_Motor.__init__(self, addr)
