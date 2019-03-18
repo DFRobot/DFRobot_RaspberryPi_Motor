@@ -237,6 +237,7 @@ class DFRobot_DC_Motor_IIC(DFRobot_DC_Motor):
   def __init__(self, bus_id, addr):
     '''
       @param bus_id: int   Which bus to operate
+      
       @oaram addr: int     Board controler address
     '''
     self._bus = smbus.SMBus(bus_id)
