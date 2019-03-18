@@ -10,6 +10,8 @@
   # Motor on connector 1 will move slow to fast, then fast to stop. loop in few seconds.
   # Motor speed will print on terminal
   #
+  # test motor: https://www.dfrobot.com/product-634.html
+  #
   # Copyright   [DFRobot](http://www.dfrobot.com), 2016
   # Copyright   GNU Lesser General Public License
   #
@@ -54,7 +56,7 @@ if __name__ == "__main__":
 
   board.set_encoder_enable(1)               # Set selected DC motor encoder enable
   # board.set_encoder_disable(1)            # Set selected DC motor encoder disable
-  board.set_encoder_reduction_ratio(1, 1)   # Set selected DC motor encoder reduction ratio
+  board.set_encoder_reduction_ratio(1, 43)   # Set selected DC motor encoder reduction ratio, test motor reduction ratio 43.8
 
   board.set_moter_pwm_frequency(500)    # Set DC motor pwm frequency to 500HZ
 
