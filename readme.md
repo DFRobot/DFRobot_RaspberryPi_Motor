@@ -70,7 +70,7 @@ class DFRobot_DC_Motor:
 
   def set_addr(self, addr):
     '''
-      @brief    Set board controler address
+      @brief    Set board controler address, reboot module to make it effective
 
       @param address    Address to set, range in 1 to 127
     '''

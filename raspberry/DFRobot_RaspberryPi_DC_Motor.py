@@ -89,11 +89,13 @@ class DFRobot_DC_Motor:
       else:
         self._set_control_mode(self._control_mode_dc_motor)
         self.motor_stop(self.all)
+        for i in range(1, self._motor_count + 1):
+          self.set_encoder_disable(i)
     return self.last_operate_status
 
   def set_addr(self, addr):
     '''
-      @brief    Set board controler address
+      @brief    Set board controler address, reboot module to make it effective
 
       @param address    Address to set, range in 1 to 127
     '''
@@ -101,8 +103,6 @@ class DFRobot_DC_Motor:
       self.last_operate_status = self.sta_err_parameter
       return
     self._write_bytes(self._reg_slave_addr, [addr])
-    if self.last_operate_status == self.sta_ok:
-      self._addr = addr
 
   def _set_control_mode(self, mode):
     self._write_bytes(self._reg_control_mode, [mode])
