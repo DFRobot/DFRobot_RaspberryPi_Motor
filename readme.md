@@ -47,90 +47,83 @@ $> python2 DC_Motor_Demo.py
 class DFRobot_DC_Motor:
 
   ''' Board status '''
-  sta_ok = 0x00
-  sta_err = 0x01
-  sta_err_device_not_detected = 0x02
-  sta_err_soft_verion = 0x03
-  sta_err_parameter = 0x04
+  STA_OK = 0x00
+  STA_ERR = 0x01
+  STA_ERR_DEVICE_NOT_DETECTED = 0x02
+  STA_ERR_SOFT_VERSION = 0x03
+  STA_ERR_PARAMETER = 0x04
 
-  ''' last operate status '''
-  last_operate_status = sta_ok
+  ''' last operate status, users can use this variable to determine the result of a function call. '''
+  last_operate_status = STA_OK
 
-  ''' Orientation '''
-  cw = 0x01
-  ccw = 0x02
-  all = 0xff
+  ''' Orientation and global variables '''
+  CW = 0x01     # clockwise
+  CCW = 0x02    # countclockwise
+  STOP = 0x05
+  ALL = 0xffffffff
 
   def begin(self):
     '''
       @brief    Board begin
-
       @return   Board status
     '''
 
   def set_addr(self, addr):
     '''
       @brief    Set board controler address, reboot module to make it effective
-
-      @param address    Address to set, range in 1 to 127
+      @param address: int    Address to set, range in 1 to 127
     '''
 
   def set_encoder_enable(self, id):
     '''
       @brief    Set dc motor encoder enable
-
-      @param id: int    Encoder id, in range 1 to 2
+      @param id: list   Encoder list, items in range 1 to 2, or id = self.ALL
     '''
   
   def set_encoder_disable(self, id):
     '''
       @brief    Set dc motor encoder disable
 
-      @param id: int   Encoder id, in range 1 to 2
+      @param id: list   Encoder list, items in range 1 to 2, or id = self.ALL
     '''
 
   def set_encoder_reduction_ratio(self, id, reduction_ratio):
     '''
       @brief    Set dc motor encoder reduction ratio
-
-      @param id: int                 Encoder id, in range 1 to 2
-      @param reduction_ratio: int    Set dc motor encoder reduction ratio, range in 1 to 2000, (pulse per circle) = 16 * reduction_ratio * 2
+      @param id: list                 Encoder list, items in range 1 to 2, or id = self.ALL
+      @param reduction_ratio: int     Set dc motor encoder reduction ratio, range in 1 to 2000, (pulse per circle) = 16 * reduction_ratio * 2
     '''
 
   def get_encoder_speed(self, id):
     '''
       @brief    Get dc motor encoder speed, unit rpm
-
-      @param id: int   Encoder id, in range 1 to 2
+      @param id: list   Encoder list, items in range 1 to 2, or id = self.ALL
+      @return :list     List of encoders speed
     '''
 
   def set_moter_pwm_frequency(self, frequency):
     '''
       @brief    Set dc motor pwm frequency
-
-      @param frequency: int    Frequency to set, in range 50HZ to 12750HZ, (actual frequency) = frequency - (frequency % 50)
+      @param frequency: int    Frequency to set, in range 100HZ to 12750HZ, otherwise no effective (actual frequency) = frequency - (frequency % 50)
     '''
 
   def motor_movement(self, id, orientation, speed):
     '''
       @brief    Motor movement
-
-      @param id: int             Motor id to move
-      @param orientation: int    Motor orientation, this.cw (clockwise) or this.ccw (counterclockwise)
-      @param speed: float        Motor pwm duty cycle, in range 1.1 to 99.9
+      @param id: list             Motor list, items in range 1 to 2, or id = self.ALL
+      @param orientation: int     Motor orientation, self.CW (clockwise) or self.CCW (counterclockwise)
+      @param speed: float         Motor pwm duty cycle, in range 0 to 100, otherwise no effective
     '''
 
   def motor_stop(self, id):
     '''
       @brief    Motor stop
-
-      @param int    Motor id to stop, use this.all to stop all motors
+      @param id: list   Motor list, items in range 1 to 2, or id = self.ALL
     '''
 
   def detecte(self):
     '''
       @brief    If you forget address you had set, use this to detecte them, must have class instance
-
       @return   Board list conformed
     '''
 
@@ -139,7 +132,6 @@ class DFRobot_DC_Motor_IIC(DFRobot_DC_Motor):
   def __init__(self, bus_id, addr):
     '''
       @param bus_id: int   Which bus to operate
-      
       @oaram addr: int     Board controler address
     '''
 

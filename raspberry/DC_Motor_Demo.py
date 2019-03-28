@@ -16,7 +16,7 @@
   # Copyright   GNU Lesser General Public License
   #
   # version  V1.0
-  # date  2017-10-9
+  # date  2019-3-26
 '''
 
 import time
@@ -30,16 +30,17 @@ def board_detect():
   print("Board list conform:")
   print(l)
 
-def print_board_status(status):
-  if status == board.sta_ok:
+''' print last operate status, users can use this variable to determine the result of a function call. '''
+def print_board_status():
+  if board.last_operate_status == board.STA_OK:
     print("board status: everything ok")
-  elif status == board.sta_err:
+  elif board.last_operate_status == board.STA_ERR:
     print("board status: unexpected error")
-  elif status == board.sta_err_device_not_detected:
+  elif board.last_operate_status == board.STA_ERR_DEVICE_NOT_DETECTED:
     print("board status: device not detected")
-  elif status == board.sta_err_parameter:
-    print("board status: parameter error")
-  elif status == board.sta_err_soft_verion:
+  elif board.last_operate_status == board.STA_ERR_PARAMETER:
+    print("board status: parameter error, last operate no effective")
+  elif board.last_operate_status == board.STA_ERR_SOFT_VERSION:
     print("board status: unsupport board framware version")
 
 if __name__ == "__main__":
@@ -49,39 +50,38 @@ if __name__ == "__main__":
   # Set board controler address, use it carefully, reboot module to make it effective
   '''
   board.set_addr(0x10)
-  if board.last_operate_status != board.sta_ok:
+  if board.last_operate_status != board.STA_OK:
     print("set board address faild")
   else:
     print("set board address success")
   '''
 
-  while board.begin() != board.sta_ok:    # Board begin and check board status
-    print_board_status(board.last_operate_status)
+  while board.begin() != board.STA_OK:    # Board begin and check board status
+    print_board_status()
     print("board begin faild")
     time.sleep(2)
   print("board begin success")
 
-  board.set_encoder_enable(1)                 # Set selected DC motor encoder enable
-  # board.set_encoder_disable(1)              # Set selected DC motor encoder disable
-  board.set_encoder_reduction_ratio(1, 43)    # Set selected DC motor encoder reduction ratio, test motor reduction ratio 43.8
+  board.set_encoder_enable(board.ALL)                 # Set selected DC motor encoder enable
+  # board.set_encoder_disable(board.ALL)              # Set selected DC motor encoder disable
+  board.set_encoder_reduction_ratio(board.ALL, 43)    # Set selected DC motor encoder reduction ratio, test motor reduction ratio is 43.8
 
-  board.set_moter_pwm_frequency(500)    # Set DC motor pwm frequency to 500HZ
-
-  time.sleep(0.1)   # wait for config done, avoid unexpect movement
+  board.set_moter_pwm_frequency(500)    # Set DC motor pwm frequency to 500H
 
   while True:
     for i in range(5, 95, 10):   # slow to fast
-      board.motor_movement(1, board.cw, i)   # DC motor 1 movement, orientation clockwise, pwm duty i
+      board.motor_movement(board.ALL, board.CW, i)    # DC motor 1 movement, orientation clockwise, pwm duty i
       time.sleep(1)
-      speed = board.get_encoder_speed(1)
-      print("motor 1 encoder speed: %d rpm, duty: %d" %(speed, i))
+      speed = board.get_encoder_speed(board.ALL)      # Use boadrd.all to get all encoders speed
+      print("duty: %d, motor 1 encoder speed: %d rpm, motor 2 encoder speed %d rpm" %(i, speed[0], speed[1]))
 
     for i in range(95, 5, -10):    # fast to slow
-      board.motor_movement(1, board.cw, i)   # DC motor 1 movement, orientation clockwise, pwm duty i
+      board.motor_movement([1, 2], board.CW, i)       # DC motor 1 movement, orientation clockwise, pwm duty i
       time.sleep(1)
-      speed = board.get_encoder_speed(1)
-      print("motor 1 encoder speed: %d rpm, duty: %d" %(speed, i))
+      speed = board.get_encoder_speed([1, 2])         # Use list to get all encoders speed
+      print("duty: %d, motor 1 encoder speed: %d rpm, motor 2 encoder speed %d rpm" %(i, speed[0], speed[1]))
 
     print("stop all motor")
-    board.motor_stop(board.all)   # stop all DC motor
+    board.motor_stop(board.ALL)   # stop all DC motor
+    print_board_status()
     time.sleep(4)
