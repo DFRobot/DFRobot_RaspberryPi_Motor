@@ -70,16 +70,16 @@ if __name__ == "__main__":
 
   while True:
     for i in range(5, 95, 10):   # slow to fast
-      board.motor_movement(board.ALL, board.CW, i)    # DC motor 1 movement, orientation clockwise, pwm duty i
+      board.motor_movement(board.ALL, board.CW, i)    # All DC motor movement, orientation clockwise, pwm duty i
       time.sleep(1)
       speed = board.get_encoder_speed(board.ALL)      # Use boadrd.all to get all encoders speed
-      print("duty: %d, motor 1 encoder speed: %d rpm, motor 2 encoder speed %d rpm" %(i, speed[0], speed[1]))
+      print("duty: %d, M1 encoder speed: %d rpm, M2 encoder speed %d rpm" %(i, speed[0], speed[1]))
 
     for i in range(95, 5, -10):    # fast to slow
-      board.motor_movement([1, 2], board.CW, i)       # DC motor 1 movement, orientation clockwise, pwm duty i
+      board.motor_movement([1, 2], board.CW, i)       # All DC motor movement, orientation clockwise, pwm duty i
       time.sleep(1)
       speed = board.get_encoder_speed([1, 2])         # Use list to get all encoders speed
-      print("duty: %d, motor 1 encoder speed: %d rpm, motor 2 encoder speed %d rpm" %(i, speed[0], speed[1]))
+      print("duty: %d, M1 encoder speed: %d rpm, M2 encoder speed %d rpm" %(i, speed[0], speed[1]))
 
     print("stop all motor")
     board.motor_stop(board.ALL)   # stop all DC motor
