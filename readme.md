@@ -17,7 +17,6 @@ Provide a Raspberry Pi library for the DC Motor Driver HAT modules.
 * [Feature](#feature)
 * [Installation](#installation)
 * [Methods](#methods)
-* [Compatibility](#compatibility)
 * [Credits](#credits)
 
 ## Summary
@@ -26,7 +25,7 @@ DC Motors driver.
 
 ## Feature
 
-1. Two DC motors with encoder control. <br>
+1. Two DC motors with encoder control or normal DC motors. <br>
 2. Get motors speed form encoder. <br>
 3. PWM frequency set. <br>
 4. PWM duty set. <br>
@@ -46,6 +45,10 @@ $> python2 DC_Motor_Demo.py
 
 class DFRobot_DC_Motor:
 
+  ''' Enum motor ID '''
+  M1 = 0x01
+  M2 = 0x02
+  
   ''' Board status '''
   STA_OK = 0x00
   STA_ERR = 0x01

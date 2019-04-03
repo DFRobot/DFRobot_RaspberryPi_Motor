@@ -46,6 +46,10 @@ class DFRobot_DC_Motor:
   _REG_DEF_PID = 0xdf
   _REG_DEF_VID = 0x01
 
+  ''' Enum motor ID '''
+  M1 = 0x01
+  M2 = 0x02
+
   ''' Board status '''
   STA_OK = 0x00
   STA_ERR = 0x01

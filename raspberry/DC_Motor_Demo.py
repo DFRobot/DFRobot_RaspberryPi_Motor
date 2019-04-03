@@ -7,7 +7,9 @@
   # Make board power and motor connection correct.
   # Run this demo.
   #
-  # Motor on connector 1 will move slow to fast, then fast to stop. loop in few seconds.
+  # Motor 1 will move slow to fast, orientation clockwise, 
+  # motor 2 will move fast to slow, orientation count-clockwise, 
+  # then fast to stop. loop in few seconds.
   # Motor speed will print on terminal
   #
   # test motor: https://www.dfrobot.com/product-634.html
@@ -66,20 +68,22 @@ if __name__ == "__main__":
   # board.set_encoder_disable(board.ALL)              # Set selected DC motor encoder disable
   board.set_encoder_reduction_ratio(board.ALL, 43)    # Set selected DC motor encoder reduction ratio, test motor reduction ratio is 43.8
 
-  board.set_moter_pwm_frequency(500)    # Set DC motor pwm frequency to 500H
+  board.set_moter_pwm_frequency(1000)   # Set DC motor pwm frequency to 1000HZ
 
   while True:
-    for i in range(5, 95, 10):   # slow to fast
-      board.motor_movement(board.ALL, board.CW, i)    # All DC motor movement, orientation clockwise, pwm duty i
+    for duty in range(5, 95, 10):   # slow to fast
+      board.motor_movement([board.M1], board.CW, duty)    # DC motor 1 movement, orientation clockwise
+      board.motor_movement([board.M2], board.CCW, duty)   # DC motor 2 movement, orientation count-clockwise
       time.sleep(1)
       speed = board.get_encoder_speed(board.ALL)      # Use boadrd.all to get all encoders speed
-      print("duty: %d, M1 encoder speed: %d rpm, M2 encoder speed %d rpm" %(i, speed[0], speed[1]))
+      print("duty: %d, M1 encoder speed: %d rpm, M2 encoder speed %d rpm" %(duty, speed[0], speed[1]))
 
-    for i in range(95, 5, -10):    # fast to slow
-      board.motor_movement([1, 2], board.CW, i)       # All DC motor movement, orientation clockwise, pwm duty i
+    for duty in range(95, 5, - 10):   # fast to low
+      board.motor_movement([board.M1], board.CW, duty)    # DC motor 1 movement, orientation clockwise
+      board.motor_movement([board.M2], board.CCW, duty)   # DC motor 2 movement, orientation count-clockwise
       time.sleep(1)
-      speed = board.get_encoder_speed([1, 2])         # Use list to get all encoders speed
-      print("duty: %d, M1 encoder speed: %d rpm, M2 encoder speed %d rpm" %(i, speed[0], speed[1]))
+      speed = board.get_encoder_speed(board.ALL)      # Use boadrd.all to get all encoders speed
+      print("duty: %d, M1 encoder speed: %d rpm, M2 encoder speed %d rpm" %(duty, speed[0], speed[1]))
 
     print("stop all motor")
     board.motor_stop(board.ALL)   # stop all DC motor
