@@ -44,7 +44,7 @@ class DFRobot_DC_Motor:
   _REG_MOTOR2_SPEED = 0x13
 
   _REG_DEF_PID = 0xdf
-  _REG_DEF_VID = 0x01
+  _REG_DEF_VID = 0x10
 
   ''' Enum motor ID '''
   M1 = 0x01
@@ -89,8 +89,6 @@ class DFRobot_DC_Motor:
     if self.last_operate_status == self.STA_OK:
       if pid[0] != self._REG_DEF_PID:
         self.last_operate_status = self.STA_ERR_DEVICE_NOT_DETECTED
-      elif vid[0] != self._REG_DEF_VID:
-        self.last_operate_status = self.STA_ERR_SOFT_VERSION
       else:
         self._set_control_mode(self._control_mode_dc_motor)
         self.motor_stop(self.ALL)
