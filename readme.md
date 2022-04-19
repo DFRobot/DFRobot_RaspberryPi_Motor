@@ -1,11 +1,15 @@
-# DFRobot DC Motor Driver HAT with support Ubuntu 20.04
+# DFRobot DC Motor Driver HAT
 
-This DFRobot Motor Drive board can communicate with RaspberryPi via I2C. <br>
+This RaspberryPi motor-driving board can communicate with RaspberryPi via IIC. <br>
 It can control the motor to rotate forward and reserve, and rotation speed. <br>
-The control command is I2C command and the drive command is PWM signal. <br>
+The control command is IIC command and the drive command is PWM signal. <br>
 The single-channel maximum operate current is 1.2A. The input port is compatible with GPIO port. <br>
 With 2 independent output channels and 2 encoder ports, it can control 2 DC-motors or 2 motors with encoder. <br>
 Application: RaspberryPi smart car, DIY tank, DIY micro-fish... <br>
+
+## DFRobot DC Motor Driver HAT Library for RaspberryPi
+
+Provide a Raspberry Pi library for the DC Motor Driver HAT modules.
 
 ## Table of Contents
 
@@ -17,7 +21,7 @@ Application: RaspberryPi smart car, DIY tank, DIY micro-fish... <br>
 
 ## Summary
 
-DC Motors driver library updated to support Ubuntu 20.04. Default DFRobot library is using `smbus`, it works on the Raspberry OS, but doesn't work on Ubuntu 20.04. So I updated it, to support Ubuntu 20.04. I didn't check if it supports Raspberry OS.
+DC Motors driver.
 
 ## Feature
 
@@ -28,48 +32,11 @@ DC Motors driver library updated to support Ubuntu 20.04. Default DFRobot librar
 
 ## Installation
 
-1. Install `raspi-config` on your Ubuntu 20.04
-https://dexterexplains.com/r/20211030-how-to-install-raspi-config-on-ubuntu
-
-2. Activate I2C interface in your Raspberry using raspi-config
-
-3. Then install `smbus2`
+This Sensor should work with DFRobot_RaspberryPi_DC_Motor on RaspberryPi. <br>
+Run the program:
 
 ```
-pip install smbus2
-sudo apt-get install python3-smbus
-```
-
-4. Create new udev rule for the motor driver
-
-```
-sudo touch /etc/udev/rules.d/99-dfrobot-motor-driver-i2c.rules
-```
-
-5. Enter root and insert next lines into it and save file, then exit root
-
-```
-sudo su
-echo 'ATTR{name}=="bcm2835 (i2c@7e804000)", MODE="0666", GROUP="i2c"' > /etc/udev/rules.d/99-dfrobot-motor-driver-i2c.rules
-exit
-```
-
-Tip: If you don't want to use udev rules above, then every time before running python program you need run in terminal:
-
-```
-sudo chmod a+rw /dev/i2c-*
-```
-
-6. Reboot Raspberry
-
-```
-reboot now
-```
-
-7. Try to run the demo program, motors must work
-
-```
-python3 DC_Motor_Demo.py
+$> python2 DC_Motor_Demo.py
 ```
 
 ## Methods
@@ -176,5 +143,3 @@ class DFRobot_DC_Motor_IIC(DFRobot_DC_Motor):
 ## Credits
 
 ·author [Frank jiehan.guo@dfrobot.com]
-
-·contributor [Maksim maxxliferobot@gmail.com]
