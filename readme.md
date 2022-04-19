@@ -1,6 +1,6 @@
 # DFRobot_RaspberryPi_Motor
 * [中文版](./README_CN.md)
-* 
+
 This RaspberryPi motor-driving board can communicate with RaspberryPi via IIC. <br>
 It can control the motor to rotate forward and reserve, and rotation speed. <br>
 The control command is IIC command and the drive command is PWM signal. <br>
