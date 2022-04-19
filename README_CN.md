@@ -1,4 +1,5 @@
 # DFRobot_RaspberryPi_Motor
+* [English Version](./README.md)
 
 这个RaspberryPi电机驱动板可以通过IIC与RaspberryPi进行通信。 <br>
 它可以控制电机向前旋转和备用，以及转速。 <br>
