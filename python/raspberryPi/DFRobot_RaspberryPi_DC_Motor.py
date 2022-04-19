@@ -1,23 +1,13 @@
 # -*- coding:utf-8 -*-
-
-'''
- MIT License
-
- Copyright (C) <2019> <@DFRobot Frank>
-
-　Permission is hereby granted, free of charge, to any person obtaining a copy of this
-　software and associated documentation files (the "Software"), to deal in the Software
-　without restriction, including without limitation the rights to use, copy, modify,
-　merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
-　permit persons to whom the Software is furnished to do so.
-
-　The above copyright notice and this permission notice shall be included in all copies or
-　substantial portions of the Software.
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
- INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
- PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
- FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
- ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+'''!
+  @file  DFRobot_RaspberryPi_DC_Motor.py
+  @brief  This is a raspberry PI DC motor drive board control library.
+  @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+  @license  The MIT License (MIT)
+  @author  [tangjie](jie.tang@dfrobot.com)
+  @version  V1.0.1
+  @date  2022-04-19
+  @url  https://github.com/DFRobot/DFRobot_RaspberryPi_Motor
 '''
 
 import time
@@ -80,7 +70,7 @@ class DFRobot_DC_Motor:
     self._addr = addr
 
   def begin(self):
-    '''
+    '''!
       @brief    Board begin
       @return   Board status
     '''
@@ -96,9 +86,9 @@ class DFRobot_DC_Motor:
     return self.last_operate_status
 
   def set_addr(self, addr):
-    '''
-      @brief    Set board controler address, reboot module to make it effective
-      @param address: int    Address to set, range in 1 to 127
+    '''!
+      @brief Set board controler address, reboot module to make it effective
+      @param address    Address to set, range in 1 to 127
     '''
     if addr < 1 or addr > 127:
       self.last_operate_status = self.STA_ERR_PARAMETER
@@ -118,27 +108,26 @@ class DFRobot_DC_Motor:
     return id
 
   def set_encoder_enable(self, id):
-    '''
-      @brief    Set dc motor encoder enable
-      @param id: list   Encoder list, items in range 1 to 2, or id = self.ALL
+    '''!
+      @brief Set dc motor encoder enable
+      @param id   Encoder list, items in range 1 to 2, or id = self.ALL
     '''
     for i in self._parse_id(id):
       self._write_bytes(self._REG_ENCODER1_EN + 5 * (i - 1), [0x01])
   
   def set_encoder_disable(self, id):
-    '''
-      @brief    Set dc motor encoder disable
-
-      @param id: list   Encoder list, items in range 1 to 2, or id = self.ALL
+    '''!
+      @brief Set dc motor encoder disable
+      @param id   Encoder list, items in range 1 to 2, or id = self.ALL
     '''
     for i in self._parse_id(id):
       self._write_bytes(self._REG_ENCODER1_EN + 5 * (i - 1), [0x00])
 
   def set_encoder_reduction_ratio(self, id, reduction_ratio):
-    '''
-      @brief    Set dc motor encoder reduction ratio
-      @param id: list                 Encoder list, items in range 1 to 2, or id = self.ALL
-      @param reduction_ratio: int     Set dc motor encoder reduction ratio, range in 1 to 2000, (pulse per circle) = 16 * reduction_ratio * 2
+    '''!
+      @brief Set dc motor encoder reduction ratio
+      @param id                Encoder list, items in range 1 to 2, or id = self.ALL
+      @param reduction_ratio   Set dc motor encoder reduction ratio, range in 1 to 2000, (pulse per circle) = 16 * reduction_ratio * 2
     '''
     reduction_ratio = int(reduction_ratio)
     if reduction_ratio < 1 or reduction_ratio > 2000:
@@ -148,10 +137,10 @@ class DFRobot_DC_Motor:
       self._write_bytes(self._REG_ENCODER1_REDUCTION_RATIO + 5 * (i - 1), [reduction_ratio >> 8, reduction_ratio & 0xff])
 
   def get_encoder_speed(self, id):
-    '''
-      @brief    Get dc motor encoder speed, unit rpm
-      @param id: list   Encoder list, items in range 1 to 2, or id = self.ALL
-      @return :list     List of encoders speed
+    '''!
+      @brief Get dc motor encoder speed, unit rpm
+      @param id   Encoder list, items in range 1 to 2, or id = self.ALL
+      @return   List of encoders speed
     '''
     l = []
     for i in self._parse_id(id):
@@ -163,9 +152,9 @@ class DFRobot_DC_Motor:
     return l
 
   def set_moter_pwm_frequency(self, frequency):
-    '''
-      @brief    Set dc motor pwm frequency
-      @param frequency: int    Frequency to set, in range 100HZ to 12750HZ, otherwise no effective (actual frequency) = frequency - (frequency % 50)
+    '''!
+      @brief Set dc motor pwm frequency
+      @param frequency    Frequency to set, in range 100HZ to 12750HZ, otherwise no effective (actual frequency) = frequency - (frequency % 50)
     '''
     if frequency < 100 or frequency > 12750:
       self.last_operate_status = self.STA_ERR_PARAMETER
@@ -175,11 +164,11 @@ class DFRobot_DC_Motor:
     time.sleep(0.1)
 
   def motor_movement(self, id, orientation, speed):
-    '''
-      @brief    Motor movement
-      @param id: list             Motor list, items in range 1 to 2, or id = self.ALL
-      @param orientation: int     Motor orientation, self.CW (clockwise) or self.CCW (counterclockwise)
-      @param speed: float         Motor pwm duty cycle, in range 0 to 100, otherwise no effective
+    '''!
+      @brief Motor movement
+      @param id             Motor list, items in range 1 to 2, or id = self.ALL
+      @param orientation    Motor orientation, self.CW (clockwise) or self.CCW (counterclockwise)
+      @param speed         Motor pwm duty cycle, in range 0 to 100, otherwise no effective
     '''
     if orientation != self.CW and orientation != self.CCW:
       self.last_operate_status = self.STA_ERR_PARAMETER
@@ -193,15 +182,15 @@ class DFRobot_DC_Motor:
       self._write_bytes(reg + 1, [int(speed), int((speed * 10) % 10)])
 
   def motor_stop(self, id):
-    '''
-      @brief    Motor stop
-      @param id: list   Motor list, items in range 1 to 2, or id = self.ALL
+    '''!
+      @brief Motor stop
+      @param id   Motor list, items in range 1 to 2, or id = self.ALL
     '''
     for i in self._parse_id(id):
       self._write_bytes(self._REG_MOTOR1_ORIENTATION + 3 * (i - 1), [self.STOP])
 
   def detecte(self):
-    '''
+    '''!
       @brief    If you forget address you had set, use this to detecte them, must have class instance
       @return   Board list conformed
     '''
@@ -222,9 +211,9 @@ import smbus
 class DFRobot_DC_Motor_IIC(DFRobot_DC_Motor):
 
   def __init__(self, bus_id, addr):
-    '''
-      @param bus_id: int   Which bus to operate
-      @oaram addr: int     Board controler address
+    '''!
+      @param bus_id   Which bus to operate
+      @oaram addr     Board controler address
     '''
     self._bus = smbus.SMBus(bus_id)
     DFRobot_DC_Motor.__init__(self, addr)

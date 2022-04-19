@@ -1,25 +1,24 @@
 # -*- coding:utf-8 -*-
-
+'''!
+  @file DC_Motor_Demo.py
+  @brief Connect board with raspberryPi.
+  @n Make board power and motor connection correct.
+  @n Run this demo.
+  @n Motor 1 will move slow to fast, orientation clockwise, 
+  @n motor 2 will move fast to slow, orientation count-clockwise, 
+  @n then fast to stop. loop in few seconds.
+  @n Motor speed will print on terminal
+  @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+  @license    The MIT License (MIT)
+  @author     [tangjie](jie.tang@dfrobot.com)
+  @version    V1.0.1
+  @date       2022-04-19
+  @url  https://github.com/DFRobot/DFRobot_RaspberryPi_Motor
 '''
-  # DC_Motor_Demo.py
-  #
-  # Connect board with raspberryPi.
-  # Make board power and motor connection correct.
-  # Run this demo.
-  #
-  # Motor 1 will move slow to fast, orientation clockwise, 
-  # motor 2 will move fast to slow, orientation count-clockwise, 
-  # then fast to stop. loop in few seconds.
-  # Motor speed will print on terminal
-  #
-  # test motor: https://www.dfrobot.com/product-634.html
-  #
-  # Copyright   [DFRobot](http://www.dfrobot.com), 2016
-  # Copyright   GNU Lesser General Public License
-  #
-  # version  V1.0
-  # date  2019-3-26
-'''
+from __future__ import print_function
+import sys
+import os
+sys.path.append("../")
 
 import time
 
