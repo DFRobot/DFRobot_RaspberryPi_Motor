@@ -217,7 +217,7 @@ class DFRobot_DC_Motor:
     self.last_operate_status = self.STA_OK
     return l
 
-from smbus2 import SMBus
+import smbus
 
 class DFRobot_DC_Motor_IIC(DFRobot_DC_Motor):
 
@@ -226,7 +226,7 @@ class DFRobot_DC_Motor_IIC(DFRobot_DC_Motor):
       @param bus_id: int   Which bus to operate
       @oaram addr: int     Board controler address
     '''
-    self._bus = SMBus(bus_id)
+    self._bus = smbus.SMBus(bus_id)
     DFRobot_DC_Motor.__init__(self, addr)
 
   def _write_bytes(self, reg, buf):
