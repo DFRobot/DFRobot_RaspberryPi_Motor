@@ -22,9 +22,12 @@ sys.path.append("../")
 
 import time
 
-from DFRobot_RaspberryPi_DC_Motor import DFRobot_DC_Motor_IIC as Board
+from DFRobot_RaspberryPi_DC_Motor import THIS_BOARD_TYPE, DFRobot_DC_Motor_IIC as Board
 
-board = Board(1, 0x10)    # Select bus 1, set address to 0x10
+if THIS_BOARD_TYPE:
+  board = Board(1, 0x10)    # RaspberryPi select bus 1, set address to 0x10
+else:
+  board = Board(7, 0x10)    # RockPi select bus 7, set address to 0x10
 
 def board_detect():
   l = board.detecte()

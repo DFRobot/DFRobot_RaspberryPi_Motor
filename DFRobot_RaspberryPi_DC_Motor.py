@@ -12,6 +12,18 @@
 
 import time
 
+# Select the driver library according to the type of development board
+ROCK_PI_BOARD = 0
+RASPBERRY_PI_BOARD = 1
+THIS_BOARD_TYPE = RASPBERRY_PI_BOARD
+try:
+    with open('/proc/device-tree/model', 'r') as f:
+        model = f.read()
+        if 'ROCK PI' in model:
+            THIS_BOARD_TYPE = ROCK_PI_BOARD
+except:
+    pass
+
 class DFRobot_DC_Motor:
 
   _STEPPER_COUNT = 1
